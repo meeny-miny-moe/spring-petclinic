@@ -1,1 +1,60 @@
+# Spring PetClinic 애플리케이션을 위한 Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic-deployment
+  labels:
+    app: petclinic
+spec:
+  replicas: 3  # 파드 복제 수
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+        - name: petclinic
+          image: tnalscherry6/spring-petclinic:latest  # 도커 허브의 최신 이미지 사용
+          imagePullPolicy: Always  # 항상 최신 이미지 풀링
+          ports:
+            - containerPort: 8080  # 컨테이너 내부에서 서비스되는 포트
 
+---
+
+# 외부 접근을 위한 Service 정의 (LoadBalancer 타입)
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic
+spec:
+  selector:
+    app: petclinic
+  type: LoadBalancer  # 외부 IP 발급 (클라우드 환경일 경우)
+  ports:
+    - port: 80         # 클라이언트가 접속할 포트
+      targetPort: 8080 # 컨테이너 내부 포트
+
+---
+
+# 도메인을 통한 접근을 위한 Ingress 설정
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: petclinic-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /  # 경로 재작성 설정 (Ingress Controller 필요)
+spec:
+  rules:
+    - host: spring.mydomain.com  # 여기에 실제 연결할 도메인 입력
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: petclinic     # 연결할 서비스 이름
+                port:
+                  number: 80       # 서비스 노출 포트

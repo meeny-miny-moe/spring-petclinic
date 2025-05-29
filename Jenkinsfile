@@ -38,7 +38,7 @@ pipeline {
         steps {
             echo 'Docker Image Build'
             dir("${env.WORKSPACE}") {
-                sh '''
+                sh '''https://github.com/meeny-miny-moe/spring-petclinic/blob/main/Jenkinsfile
                    docker build -t spring-petclinic:$BUILD_NUMBER .
                    docker tag spring-petclinic:$BUILD_NUMBER tnalscherry6/spring-petclinic:latest
                    '''
@@ -69,10 +69,7 @@ pipeline {
             steps {
                 echo 'Deploying to Kubernetes'
                 dir('k8s') {
-                    sh '''
-                        kubectl apply -f project1-deploy.yaml
-                        // kubectl apply -f ingress.yaml   // 도메인으로 접속하고 싶을 때 필요. NGINX Ingress
-                    '''
+                    sh 'kubectl apply -f project1-deploy.yaml'
                 }
             }
         }

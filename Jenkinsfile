@@ -64,5 +64,17 @@ pipeline {
             '''
         }
     }
+    stage('Deploy to Kubernetes') {
+            steps {
+                echo 'Deploying to Kubernetes'
+                dir('k8s') {
+                    sh '''
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
+                        kubectl apply -f ingress.yaml
+                    '''
+                }
+            }
+        }
  }
 }

@@ -7,8 +7,8 @@ pipeline {
  }
  environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerCredential')
-    REGION = "ap-northeast-2"
-    AWS_CREDENTIALS_NAME = "AWSCredentials"
+    // REGION = "ap-northeast-2"
+    // AWS_CREDENTIALS_NAME = "AWSCredentials"
  }
  stages {
     stage('Git Clone') {
@@ -63,15 +63,15 @@ pipeline {
             docker rmi -f tnalscherry6/spring-petclinic:latest
             '''
         }
-    }
+    } 
+   // Kubernetes Deploy
     stage('Deploy to Kubernetes') {
             steps {
                 echo 'Deploying to Kubernetes'
                 dir('k8s') {
                     sh '''
-                        kubectl apply -f deployment.yaml
-                        kubectl apply -f service.yaml
-                        kubectl apply -f ingress.yaml
+                        kubectl apply -f project1-deploy.yaml
+                        // kubectl apply -f ingress.yaml   // 도메인으로 접속하고 싶을 때 필요. NGINX Ingress
                     '''
                 }
             }

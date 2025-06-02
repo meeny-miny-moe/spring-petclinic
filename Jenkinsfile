@@ -37,8 +37,8 @@ pipeline {
     stage('Maven Build') {
       steps {
         echo 'Maven Build'
-        #sh './mvnw -DskipTests clean package'
-        sh 'mvn -DskipTests clean package'
+        sh './mvnw -DskipTests clean package'
+        #sh 'mvn -DskipTests clean package'
       }
     }
 

@@ -21,55 +21,33 @@ pipeline {
 
     stage('Maven Build') {
       steps {
-        echo '🛠 Maven Build'
+        echo '🛠 Maven Build (with mvnw)'
         sh 'chmod +x mvnw'
         sh './mvnw -DskipTests clean package'
       }
     }
 
-    stage('Docker Build') {
+    stage('Docker Image Build') {
       steps {
-        echo '🐳 Docker Image Build (no-cache)'
+        echo '🐳 Docker Build (no cache)'
         dir("${env.WORKSPACE}") {
           sh '''
-            docker build --no-cache -t tnalscherry6/spring-petclinic-prometheus:latest .
+            docker build --no-cache -t spring-petclinic-prometheus:$BUILD_NUMBER .
+            docker tag spring-petclinic-prometheus:$BUILD_NUMBER tnalscherry6/spring-petclinic-prometheus:latest
           '''
         }
       }
     }
 
-    stage('Docker Push') {
+    stage('Docker Image Push') {
       steps {
-        echo '📤 Docker Push to DockerHub'
+        echo '📤 Docker Push'
         sh '''
           echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
           docker push tnalscherry6/spring-petclinic-prometheus:latest
         '''
       }
-    }
 
-    stage('Clean Docker Images') {
-      steps {
-        echo '🧹 Docker Clean Up'
-        sh '''
-          docker rmi -f tnalscherry6/spring-petclinic-prometheus:latest || true
-        '''
-      }
-    }
-
-    stage('Deploy to Kubernetes') {
-      steps {
-        echo '🚀 Deploy to Kubernetes'
-        dir('k8s') {
-          sh '''
-            kubectl apply -f project1-deploy.yaml
-            kubectl apply -f petclinic-monitor.yaml
-          '''
-        }
-      }
-    }
-  }
-}
 
 
 // pipeline {

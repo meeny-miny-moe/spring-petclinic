@@ -37,6 +37,7 @@ pipeline {
     stage('Maven Build') {
       steps {
         echo 'Maven Build (with mvnw)'
+        sh 'chmod +x mvnw'
         sh './mvnw -DskipTests clean package'
       }
     }

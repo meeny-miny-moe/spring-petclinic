@@ -14,14 +14,14 @@ pipeline {
   stages {
     stage('Git Clone') {
       steps {
-        echo '📦 Git Clone'
+        echo 'Git Clone'
         git url: 'https://github.com/meeny-miny-moe/spring-petclinic.git', branch: 'main'
       }
     }
 
     stage('Maven Build') {
       steps {
-        echo '🛠 Maven Build (with mvnw)'
+        echo 'Maven Build (with mvnw)'
         sh 'chmod +x mvnw'
         sh './mvnw -DskipTests clean package'
       }
@@ -29,7 +29,7 @@ pipeline {
 
     stage('Docker Image Build') {
       steps {
-        echo '🐳 Docker Build (no cache)'
+        echo 'Docker Build (no cache)'
         dir("${env.WORKSPACE}") {
           sh '''
             docker build --no-cache -t spring-petclinic-prometheus:$BUILD_NUMBER .
@@ -41,7 +41,7 @@ pipeline {
 
     stage('Docker Image Push') {
       steps {
-        echo '📤 Docker Push'
+        echo 'Docker Push'
         sh '''
           echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
           docker push tnalscherry6/spring-petclinic-prometheus:latest
@@ -51,7 +51,7 @@ pipeline {
 
     stage('Remove Local Docker Image') {
       steps {
-        echo '🧹 Docker Clean Up'
+        echo 'Docker Clean Up'
         sh '''
           docker rmi -f tnalscherry6/spring-petclinic-prometheus:$BUILD_NUMBER || true
           docker rmi -f tnalscherry6/spring-petclinic-prometheus:latest || true
@@ -61,7 +61,7 @@ pipeline {
 
     stage('Deploy to Kubernetes') {
       steps {
-        echo '🚀 Deploy to Kubernetes'
+        echo 'Deploy to Kubernetes'
         dir('k8s') {
           sh '''
             kubectl apply -f project1-deploy.yaml
@@ -70,8 +70,8 @@ pipeline {
         }
       }
     }
-  }  // ⬅️ stages 블록 닫기
-}    // ⬅️ pipeline 블록 닫기 (※ 이전 오류 원인: 이 중괄호 빠짐)
+  }  // stages 블록 닫기
+}    // pipeline 블록 닫기 (※ 이전 오류 원인: 이 중괄호 빠짐)
 
 
 
@@ -127,7 +127,7 @@ pipeline {
 //         echo 'Docker Image Build'
 //         dir("${env.WORKSPACE}") {
 //           sh '''
-//             # ❌ [오류 제거됨] 아래 줄은 잘못된 명령어였기 때문에 삭제함
+//             # [오류 제거됨] 아래 줄은 잘못된 명령어였기 때문에 삭제함
 //             # https://github.com/meeny-miny-moe/spring-petclinic/blob/main/Jenkinsfile
 
 //             docker build --no-cache -t spring-petclinic-prometheus:$BUILD_NUMBER .

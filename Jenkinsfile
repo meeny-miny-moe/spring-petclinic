@@ -34,39 +34,51 @@ pipeline {
       }
     }
 
-    stage('Docker Image Build') {
-      steps {
-        echo 'Docker Image Build'
-        dir("${env.WORKSPACE}") {
-          sh '''
-            # ❌ [오류 제거됨] 아래 줄은 잘못된 명령어였기 때문에 삭제함
-            # https://github.com/meeny-miny-moe/spring-petclinic/blob/main/Jenkinsfile
+    // stage('Docker Image Build') {
+    //   steps {
+    //     echo 'Docker Image Build'
+    //     dir("${env.WORKSPACE}") {
+    //       sh '''
+    //         # ❌ [오류 제거됨] 아래 줄은 잘못된 명령어였기 때문에 삭제함
+    //         # https://github.com/meeny-miny-moe/spring-petclinic/blob/main/Jenkinsfile
 
-            docker build -t spring-petclinic-prometheus:$BUILD_NUMBER .
-            docker tag spring-petclinic-prometheus:$BUILD_NUMBER tnalscherry6/spring-petclinic-prometheus:latest
-          '''
-        }
-      }
-    }
+    //         docker build -t spring-petclinic-prometheus-0602:$BUILD_NUMBER .
+    //         docker tag spring-petclinic-prometheus-0602:$BUILD_NUMBER sobin0401/spring-petclinic-prometheus-0602:latest
+    //       '''
+    //     }
+    //   }
+    // }
 
-    stage('Docker Image Push') {
+    // stage('Docker Image Push') {
+    //   steps {
+    //     sh '''
+    //       echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+    //       docker push sobin0401/spring-petclinic-prometheus-0602:latest
+    //     '''
+    //   }
+    // }
+
+    // stage('Remove Docker Image') {
+    //   steps {
+    //     sh '''
+    //       docker rmi -f tnalscherry6/spring-petclinic-prometheus:$BUILD_NUMBER
+    //       docker rmi -f tnalscherry6/spring-petclinic-prometheus:latest
+    //     '''
+    //   }
+    // }
+
+    
+    stage('Docker Image Pull') {
       steps {
         sh '''
           echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-          docker push tnalscherry6/spring-petclinic-prometheus:latest
+          docker pull sobin0401/spring-petclinic-prometheus-0602:latest
         '''
-      }
     }
+  }
 
-    stage('Remove Docker Image') {
-      steps {
-        sh '''
-          docker rmi -f tnalscherry6/spring-petclinic-prometheus:$BUILD_NUMBER
-          docker rmi -f tnalscherry6/spring-petclinic-prometheus:latest
-        '''
-      }
-    }
 
+    
     stage('Deploy to Kubernetes') {
       steps {
         echo 'Deploying to Kubernetes'

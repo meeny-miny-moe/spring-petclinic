@@ -39,7 +39,8 @@ spec:
     app: petclinic
   type: LoadBalancer  # 외부 IP 발급 (클라우드 환경일 경우)
   ports:
-    - port: 80         # 클라이언트가 접속할 포트
+    - name: http 
+      port: 80         # 클라이언트가 접속할 포트
       targetPort: 8080 # 컨테이너 내부 포트
 
 

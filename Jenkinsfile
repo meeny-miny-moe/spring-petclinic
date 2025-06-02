@@ -79,7 +79,12 @@ pipeline {
   // }
 
 
-    
+    stage('Test Image in Pod') {
+      steps {
+        sh 'kubectl run -it --rm test-petclinic --image=tnalscherry6/spring-petclinic-prometheus:latest -- /bin/sh -c "curl -v http://localhost:8080/actuator/prometheus"'
+      }
+    }
+
     stage('Deploy to Kubernetes') {
       steps {
         echo 'Deploying to Kubernetes'

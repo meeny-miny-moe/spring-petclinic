@@ -1,0 +1,14 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus  # Prometheus endpoint 노출
+  metrics:
+    export:
+      prometheus:
+        enabled: true  # Prometheus 활성화
+    web:
+      server:
+        auto-timeout: 1s
+  prometheus:
+    enabled: true

@@ -53,7 +53,7 @@ pipeline {
             # ❌ [오류 제거됨] 아래 줄은 잘못된 명령어였기 때문에 삭제함
             # https://github.com/meeny-miny-moe/spring-petclinic/blob/main/Jenkinsfile
 
-            docker build -t spring-petclinic-prometheus:$BUILD_NUMBER .
+            docker build --no-cache -t spring-petclinic-prometheus:$BUILD_NUMBER .
             docker tag spring-petclinic-prometheus:$BUILD_NUMBER tnalscherry6/spring-petclinic-prometheus:latest
           '''
         }

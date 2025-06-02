@@ -10,10 +10,12 @@ spec:
   selector:
     matchLabels:
       app: petclinic
+      
   template:
     metadata:
       labels:
         app: petclinic
+        release: prometheus
       annotations:                       # <--- 여기 annotations 추가
        prometheus.io/scrape: "true"
        prometheus.io/path: "/actuator/prometheus"

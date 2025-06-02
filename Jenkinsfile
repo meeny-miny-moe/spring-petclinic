@@ -49,6 +49,30 @@ pipeline {
       }
     }
 
+    stage('Remove Local Docker Image') {
+      steps {
+        echo '🧹 Docker Clean Up'
+        sh '''
+          docker rmi -f tnalscherry6/spring-petclinic-prometheus:$BUILD_NUMBER || true
+          docker rmi -f tnalscherry6/spring-petclinic-prometheus:latest || true
+        '''
+      }
+    }
+
+    stage('Deploy to Kubernetes') {
+      steps {
+        echo '🚀 Deploy to Kubernetes'
+        dir('k8s') {
+          sh '''
+            kubectl apply -f project1-deploy.yaml
+            kubectl apply -f petclinic-monitor.yaml
+          '''
+        }
+      }
+    }
+  }  // ⬅️ stages 블록 닫기
+}    // ⬅️ pipeline 블록 닫기 (※ 이전 오류 원인: 이 중괄호 빠짐)
+
 
 
 // pipeline {

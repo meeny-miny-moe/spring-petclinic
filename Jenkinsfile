@@ -84,7 +84,10 @@ pipeline {
       steps {
         echo 'Deploying to Kubernetes'
         dir('k8s') {
-          sh 'kubectl apply -f project1-deploy.yaml'
+          sh '''
+            kubectl apply -f project1-deploy.yaml
+            kubectl apply -f petclinic-monitor.yaml
+          '''
         }
       }
     }

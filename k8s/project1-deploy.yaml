@@ -10,15 +10,14 @@ spec:
   selector:
     matchLabels:
       app: petclinic
-    annotations:                       # <--- 여기 annotations 추가
-       prometheus.io/scrape: "true"
-       prometheus.io/path: "/actuator/prometheus"
-       prometheus.io/port: "8080"
-
   template:
     metadata:
       labels:
         app: petclinic
+      annotations:                       # <--- 여기 annotations 추가
+       prometheus.io/scrape: "true"
+       prometheus.io/path: "/actuator/prometheus"
+       prometheus.io/port: "8080"
     spec:
       containers:
         - name: petclinic

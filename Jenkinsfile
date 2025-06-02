@@ -36,11 +36,12 @@ pipeline {
     // }
     stage('Maven Build') {
       steps {
-        echo 'Maven Build'
-        #sh './mvnw -DskipTests clean package'
-        sh 'mvn -DskipTests clean package'
+        echo 'Maven Build (with mvnw)'
+        sh './mvnw -DskipTests clean package'
       }
     }
+
+
 
 
     stage('Docker Image Build') {

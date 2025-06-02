@@ -28,12 +28,19 @@ pipeline {
       }
     }
 
+    // stage('Maven Build') {
+    //   steps {
+    //     echo 'Maven Build'
+    //     sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+    //   }
+    // }
     stage('Maven Build') {
       steps {
         echo 'Maven Build'
-        sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+        sh './mvnw -DskipTests clean package'
       }
     }
+
 
     stage('Docker Image Build') {
       steps {

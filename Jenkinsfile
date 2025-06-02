@@ -47,6 +47,7 @@ pipeline {
           docker push tnalscherry6/spring-petclinic-prometheus:latest
         '''
       }
+    }
 
 
 

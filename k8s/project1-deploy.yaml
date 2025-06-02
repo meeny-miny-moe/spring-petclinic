@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: petclinic
-          image: tnalscherry6/spring-petclinic:latest
+          image: tnalscherry6/spring-petclinic-prometheus:latest
           imagePullPolicy: Always
           ports:
             - name: http

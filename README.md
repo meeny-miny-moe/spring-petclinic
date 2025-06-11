@@ -1,4 +1,3 @@
-
 ▪ 프로젝트
 프로젝트명: 코드자동화및 배포관리프로젝트
 기간: 05/12 ~ 05/30
@@ -13,6 +12,7 @@
 기술 환경
 - CI/CD & DevOps
 ● Jenkins: GitHub 연동을 통한 자동 빌드 및 배포 파이프라인 구축
+
 ● Docker / DockerHub: 컨테이너 이미지 생성 및 DockerHub 업로드
 ● Kubernetes: 멀티 노드 클러스터 구성(Master + Node01~03), 애플리케이션 배포 및 관리
 ● Prometheus & Grafana: 클러스터 및 애플리케이션 모니터링 환경 구축

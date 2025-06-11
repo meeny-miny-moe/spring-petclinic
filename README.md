@@ -15,7 +15,7 @@
 
 기술 환경
 
-- CI/CD & DevOps
+CI/CD & DevOps
 
 ● Jenkins: GitHub 연동을 통한 자동 빌드 및 배포 파이프라인 구축
 
@@ -27,7 +27,8 @@
 
 ● Ansible: 인프라 구성 자동화 및 설정 관리
 
-- 클라우드 & 인프라 (AWS 기반)
+
+클라우드 & 인프라 (AWS 기반)
 
 ● VPC: 퍼블릭/프라이빗 서브넷 분리 구성
 
@@ -43,7 +44,8 @@
 
 ● CodeDeploy: Jenkins와 연동한 EC2 배포 자동화 구성
 
-- 기타
+
+기타
 
 ● GitHub: 소스 코드 관리 및 Jenkins 연동
 

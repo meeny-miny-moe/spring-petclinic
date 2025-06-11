@@ -1,68 +1,121 @@
 ▪ 프로젝트
+
 프로젝트명: 코드자동화및 배포관리프로젝트
+
 기간: 05/12 ~ 05/30
+
 참여 인원: 3
 
 개요
+
 이미 구축된 온프레미스 환경의 인프라를 클라우드에 마이그레이션 할 때 확장 가능한 네트 워크 환경에서 애플리케이션과 DB를 구축하였습니다.
 클라우드의 인프라를 Ansible을 이용하여 자동화함으로써 구축 및 관리를 자동화할 수 있 고 문서화 및 인수인계를 편리하게 할 수 있도록 하였습니다.
 도커 엔진을 이용한 인프라 구성을 쿠버네티스를 이용하여 효율적으로 프로비저닝 할 수 있 습니다.
 이후 온프레미스 환경의 인프라가 클라우드에 모두 이전 시 관리 및 운영경비를 절약할 수 있을 것으로 기대합니다.
 
 기술 환경
+
 - CI/CD & DevOps
+
 ● Jenkins: GitHub 연동을 통한 자동 빌드 및 배포 파이프라인 구축
 
 ● Docker / DockerHub: 컨테이너 이미지 생성 및 DockerHub 업로드
+
 ● Kubernetes: 멀티 노드 클러스터 구성(Master + Node01~03), 애플리케이션 배포 및 관리
+
 ● Prometheus & Grafana: 클러스터 및 애플리케이션 모니터링 환경 구축
+
 ● Ansible: 인프라 구성 자동화 및 설정 관리
+
 - 클라우드 & 인프라 (AWS 기반)
+
 ● VPC: 퍼블릭/프라이빗 서브넷 분리 구성
+
 ● EC2 Auto Scaling Group: 탄력적 확장 설정
+
 ● Application Load Balancer (ALB): 트래픽 분산 및 고가용성 확보
+
 ● NAT Gateway / Internet Gateway: 외부 인터넷 및 내부 자원 접근 제어
+
 ● Amazon S3: 배포 파일 저장소로 활용
+
 ● IAM: 배포 및 접근 권한 관리
+
 ● CodeDeploy: Jenkins와 연동한 EC2 배포 자동화 구성
+
 - 기타
+
 ● GitHub: 소스 코드 관리 및 Jenkins 연동
+
 ● Bastion Host: 퍼블릭 서브넷을 통한 SSH 접근 제어
+
 
 담당 역할: Ansible, Prometheus & Grafana, AWS Cloud, Jenkins CI & CD, Git 형상 관리
 
+
 주요 기능 및 구현 과정
+
 AWS 기반 CI/CD 및 Kubernetes 배포 자동화 인프라 구축
+
 ● 주요 기능
+
 ● CI/CD 파이프라인 구축
+
 ● GitHub → Jenkins → DockerHub → Kubernetes까지 자동화된 배포 파이프라인 구성
+
 ● Jenkins에서 애플리케이션을 Docker Image Build 및 DockerHub 업로드 자동화
+
 ● Master-Node 구조의 Kubernetes 클러스터 구성 (Node01~Node03)
+
 ● 애플리케이션은 Kubernetes에 자동으로 배포되며, Prometheus + Grafana로 모니터링 구현
+
 ● AWS 인프라 구성
+
 ● VPC 내 가용 영역(AZ)을 나눠 퍼블릭/프라이빗 서브넷 구성
+
 ● Bastion Host 및 NAT Gateway를 통한 보안 구성
+
 ● Application Load Balancer(ELB)를 통한 Auto Scaling Group 배포 및 트래픽 분산
+
 ● AWS 서비스 연동
+
 ● CodeDeploy + IAM Role 기반 자동 배포
+
 ● DockerHub, S3, Ansible과의 통합 운영
+
 ● 구현 과정
+
 ● Jenkins 서버를 AWS 프라이빗 서브넷에 설치하고, Bastion Host를 통해 SSH 접근 설정
+
 ● GitHub Webhook을 이용하여 Jenkins Pipeline 트리거
+
 ● Jenkins에서 Dockerfile 기반으로 애플리케이션 이미지 빌드 및 DockerHub 업로드 자동화
+
 ● Kubernetes 클러스터 구축 후, Jenkins로 자동 배 포
+
 ● Prometheus Operator 설치 및 Grafana와 연동하여 클러스터/애플리케이션 상태 모니터링
+
 ● Ansible을 통해 초기 서버 구성 자동화, IAM 및 S3와 연계한 자격증명 및 아티팩트 저장소 활용
+
 ● 기술 스택
+
 ● CI/CD:  Jenkins, GitHub, DockerHub, AWS CodeDeploy
+
 ● Container Orchestration: Kubernetes, Helm(optional)
+
 ● Monitoring: Prometheus, Grafana
+
 ● Infra-as-Code : Ansible
+
 ● Cloud: AWS (EC2, VPC, ELB, Auto Scaling, NAT Gateway, Bastion)
+
 ● 성과
+
 ● 장애 대응 시간 단축: Prometheus 알림 기반 실시간 이상 탐지 가능
+
 ● 비용 최적화 및 고가용성 보장 (Auto Scaling + Multi-AZ 구성)
 성과 및 배운점
+
 
 AWS 기반의 CI/CD 및 Kubernetes 자동화 인프라 구축 프로젝트를 통해 전체 배포 파이프라인을 직 접 설계하고 구현하였습니다. Jenkins와 DockerHub, GitHub를 연동하여 코드 커밋 시 자동으로 컨테 이너 이미지가 빌드되고, Kubernetes 클러스터에 배포되도록 구성하였습니다. Prometheus와 Grafana를 통해 클러스터 상태를 실시간 모니터링하며 운영 효율성을 높였습니다. Auto Scaling Group과 ELB를 활용해 고가용성과 트래픽 대응 능력을 확보하였습니다. Ansible과 IAM, S3를 연계 하여 인프라 설정 자동화 및 보안도 고려하였습니다. 이 경험을 통해 클라우드 아키텍처 설계 능력과 자동화 실무 감각을 기를 수 있었습니다. 특히 장애 대응, 확장성, 비용 효율성을 함께 고려하는 인프 라 설계의 중요성을 체감하였습니다. DevOps 환경에서 협업과 운영까지 고려하는 역량을 키운 계기였습니다.
 

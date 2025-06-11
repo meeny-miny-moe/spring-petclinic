@@ -30,6 +30,7 @@ CI/CD & DevOps
 
 클라우드 & 인프라 (AWS 기반)
 
+
 ● VPC: 퍼블릭/프라이빗 서브넷 분리 구성
 
 ● EC2 Auto Scaling Group: 탄력적 확장 설정
